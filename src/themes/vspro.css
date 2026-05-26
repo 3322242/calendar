@@ -1,0 +1,65 @@
+/* vspro preset — maps @vspro/calendar CSS vars to vspro v2 DESIGN.md tokens.
+   Import: import '@vspro/calendar/themes/vspro' */
+
+@import '../theme/index.css';
+
+:root,
+[data-cal-theme] {
+  --cal-bg: #0d1117;
+  --cal-surface: #161b22;
+  --cal-surface-hover: #1c2128;
+  --cal-surface-today: #22272e;
+  --cal-border: #1a1f26;
+  --cal-border-strong: #3d444c;
+  --cal-text: #e6edf3;
+  --cal-text-secondary: #7d8590;
+  --cal-text-muted: #6e7681;
+  --cal-accent: #5e6ad2;
+  --cal-accent-text: #ffffff;
+  --cal-event-bg: transparent;
+  --cal-event-text: #e6edf3;
+  --cal-event-border: transparent;
+  --cal-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --cal-font-size: 13px;
+  --cal-radius: 8px;
+  --cal-radius-event: 4px;
+  --cal-cell-gap: 4px;
+  --cal-cell-padding: 10px;
+  --cal-shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --cal-shadow-popover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --cal-duration-fast: 100ms;
+  --cal-duration-normal: 150ms;
+  --cal-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* vspro gradient event chips (dark) */
+[data-cal-event] {
+  background: linear-gradient(to right, rgba(125, 133, 144, 0.22), transparent 55%);
+  border-left: none;
+  font-feature-settings: 'cv11', 'ss03';
+  letter-spacing: -0.005em;
+}
+
+/* vspro light overrides */
+[data-cal-theme='light'] {
+  --cal-bg: #f0f3f6;
+  --cal-surface: #ffffff;
+  --cal-surface-hover: #f6f8fa;
+  --cal-surface-today: #eaeef2;
+  --cal-border: #d8dee4;
+  --cal-border-strong: #afb8c1;
+  --cal-text: #1f2328;
+  --cal-text-secondary: #59636e;
+  --cal-text-muted: #818b97;
+  --cal-accent: #5e6ad2;
+  --cal-event-text: #1f2328;
+}
+
+[data-cal-theme='light'] [data-cal-event] {
+  background: linear-gradient(to right, #cbd5e1 0%, rgba(203, 213, 225, 0.4) 100%);
+}
+
+/* vspro borderless tiles — no borders on day cells */
+[data-cal-day] {
+  border: none;
+}

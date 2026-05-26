@@ -1,0 +1,69 @@
+:root,
+[data-cal-theme='light'] {
+  --cal-bg: #ffffff;
+  --cal-surface: #f9fafb;
+  --cal-surface-hover: #f3f4f6;
+  --cal-surface-today: #eff6ff;
+  --cal-border: #e5e7eb;
+  --cal-border-strong: #d1d5db;
+  --cal-text: #111827;
+  --cal-text-secondary: #6b7280;
+  --cal-text-muted: #9ca3af;
+  --cal-accent: #3b82f6;
+  --cal-accent-text: #ffffff;
+  --cal-event-bg: #dbeafe;
+  --cal-event-text: #1e40af;
+  --cal-event-border: #93c5fd;
+  --cal-font-family: system-ui, -apple-system, sans-serif;
+  --cal-font-size: 13px;
+  --cal-font-weight: 400;
+  --cal-font-weight-medium: 500;
+  --cal-font-weight-bold: 600;
+  --cal-radius: 6px;
+  --cal-radius-event: 4px;
+  --cal-cell-padding: 8px;
+  --cal-cell-gap: 4px;
+  --cal-header-height: 48px;
+  --cal-time-width: 56px;
+  --cal-shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --cal-shadow-popover: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --cal-duration-fast: 100ms;
+  --cal-duration-normal: 150ms;
+  --cal-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-cal-theme='light']) {
+    --cal-bg: #111827;
+    --cal-surface: #1f2937;
+    --cal-surface-hover: #374151;
+    --cal-surface-today: #1e3a5f;
+    --cal-border: #374151;
+    --cal-border-strong: #4b5563;
+    --cal-text: #f9fafb;
+    --cal-text-secondary: #9ca3af;
+    --cal-text-muted: #6b7280;
+    --cal-accent: #60a5fa;
+    --cal-accent-text: #111827;
+    --cal-event-bg: #1e3a5f;
+    --cal-event-text: #93c5fd;
+    --cal-event-border: #3b82f6;
+  }
+}
+
+[data-cal-theme='dark'] {
+  --cal-bg: #111827;
+  --cal-surface: #1f2937;
+  --cal-surface-hover: #374151;
+  --cal-surface-today: #1e3a5f;
+  --cal-border: #374151;
+  --cal-border-strong: #4b5563;
+  --cal-text: #f9fafb;
+  --cal-text-secondary: #9ca3af;
+  --cal-text-muted: #6b7280;
+  --cal-accent: #60a5fa;
+  --cal-accent-text: #111827;
+  --cal-event-bg: #1e3a5f;
+  --cal-event-text: #93c5fd;
+  --cal-event-border: #3b82f6;
+}

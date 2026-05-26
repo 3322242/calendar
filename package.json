@@ -1,0 +1,76 @@
+{
+  "name": "@vspro/calendar",
+  "version": "0.0.1",
+  "description": "Headless React event calendar — compound components, CSS custom properties, zero dependencies",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./theme": "./dist/theme/index.css",
+    "./themes/vspro": "./dist/themes/vspro.css",
+    "./theme/month": "./dist/theme/month.css",
+    "./theme/week": "./dist/theme/week.css",
+    "./theme/day": "./dist/theme/day.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build && bun run build:types",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "happy-dom": "^15.0.0",
+    "prettier": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "headless",
+    "event-calendar",
+    "compound-components",
+    "css-custom-properties",
+    "month-view",
+    "week-view",
+    "day-view",
+    "accessible",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3322242/calendar.git"
+  },
+  "license": "MIT",
+  "author": "Yan <iansats@pm.me>",
+  "sideEffects": [
+    "**/*.css"
+  ]
+}
