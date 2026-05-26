@@ -1,0 +1,96 @@
+/* Day view — single column variant of week grid */
+
+[data-cal-day-view] {
+  font-family: var(--cal-font-family);
+  font-size: var(--cal-font-size);
+  color: var(--cal-text);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-cal-day-view] [data-cal-allday] {
+  display: flex;
+  border-bottom: 1px solid var(--cal-border);
+  min-height: 32px;
+}
+
+[data-cal-day-view] [data-cal-allday-label] {
+  width: var(--cal-time-width);
+  flex-shrink: 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: var(--cal-text-muted);
+  text-align: right;
+}
+
+[data-cal-day-view] [data-cal-allday-events] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0;
+}
+
+[data-cal-day-body] {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+}
+
+[data-cal-day-view] [data-cal-time-axis] {
+  width: var(--cal-time-width);
+  flex-shrink: 0;
+}
+
+[data-cal-day-view] [data-cal-time-label] {
+  height: 60px;
+  padding: 0 8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  font-size: 11px;
+  color: var(--cal-text-muted);
+  transform: translateY(-6px);
+  user-select: none;
+}
+
+.cal-day-column {
+  flex: 1;
+  position: relative;
+  border-left: 1px solid var(--cal-border);
+}
+
+.cal-day-column[data-today] {
+  background: var(--cal-surface-today);
+}
+
+.cal-day-slot {
+  height: 30px;
+  border-bottom: 1px solid var(--cal-border);
+  cursor: pointer;
+  transition: background var(--cal-duration-fast) var(--cal-ease);
+}
+
+.cal-day-slot:hover {
+  background: var(--cal-surface-hover);
+}
+
+.cal-day-slot[data-minute='0'] {
+  border-bottom-style: solid;
+}
+
+.cal-day-slot[data-minute='30'] {
+  border-bottom-style: dashed;
+  border-bottom-color: color-mix(in srgb, var(--cal-border) 50%, transparent);
+}
+
+.cal-day-event {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 2px 4px;
+  border-radius: var(--cal-radius-event);
+  min-height: 18px;
+}

@@ -1,4 +1,6 @@
 @import './variables.css';
+@import './week.css';
+@import './day.css';
 
 [data-cal-header] {
   display: flex;

@@ -8,6 +8,8 @@ export {
   ViewSwitcher,
 } from './components/Header';
 export { MonthGrid } from './components/MonthGrid';
+export { WeekGrid } from './components/WeekGrid';
+export { DayGrid } from './components/DayGrid';
 export { Event } from './components/Event';
 
 export { useCalendar } from './hooks/useCalendar';
@@ -63,6 +65,8 @@ import {
   ViewSwitcher,
 } from './components/Header';
 import { MonthGrid } from './components/MonthGrid';
+import { WeekGrid } from './components/WeekGrid';
+import { DayGrid } from './components/DayGrid';
 import { Event } from './components/Event';
 
 export const Calendar = Object.assign(Root, {
@@ -74,5 +78,7 @@ export const Calendar = Object.assign(Root, {
   Title,
   ViewSwitcher,
   MonthGrid,
+  WeekGrid,
+  DayGrid,
   Event,
 });
