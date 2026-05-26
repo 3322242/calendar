@@ -8,17 +8,60 @@
   flex-direction: column;
 }
 
-/* Day header row (above time grid) */
-[data-cal-week]::before {
-  content: '';
-  display: none;
-}
-
-/* All-day section */
-[data-cal-allday] {
+/* Day headers row */
+[data-cal-week-day-headers] {
   display: flex;
   border-bottom: 1px solid var(--cal-border);
+}
+
+[data-cal-week-corner] {
+  width: var(--cal-time-width);
+  flex-shrink: 0;
+}
+
+[data-cal-week-day-header] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0 6px;
+  border-left: 1px solid var(--cal-border);
+}
+
+[data-cal-week-day-header][data-today] [data-cal-day-num] {
+  background: var(--cal-accent);
+  color: var(--cal-accent-text);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-cal-day-name] {
+  font-size: 11px;
+  font-weight: var(--cal-font-weight-medium, 500);
+  color: var(--cal-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-cal-day-num] {
+  font-size: 20px;
+  font-weight: var(--cal-font-weight-medium, 500);
+  color: var(--cal-text);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* All-day section — visually separated from time grid */
+[data-cal-allday] {
+  display: flex;
+  background: var(--cal-surface);
+  border-bottom: 2px solid var(--cal-border-strong);
   min-height: 32px;
+  padding: 4px 0;
 }
 
 [data-cal-allday-label] {
@@ -28,6 +71,9 @@
   font-size: 11px;
   color: var(--cal-text-muted);
   text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 [data-cal-allday-grid] {
@@ -35,7 +81,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
-  padding: 4px 0;
+  padding: 2px 0;
   position: relative;
 }
 
@@ -44,14 +90,9 @@
   position: relative;
 }
 
-[data-cal-allday-col][data-today] {
-  background: var(--cal-surface-today);
-  border-radius: var(--cal-radius-event);
-}
-
 .cal-week-allday-event {
   font-size: 11px;
-  padding: 1px 6px;
+  padding: 2px 6px;
   z-index: 1;
 }
 
@@ -100,8 +141,9 @@
   border-left: 1px solid var(--cal-border);
 }
 
-[data-cal-day-col][data-today] {
-  background: var(--cal-surface-today);
+/* Week view: subtle today stripe instead of solid fill */
+[data-cal-week] [data-cal-day-col][data-today] {
+  background: color-mix(in srgb, var(--cal-surface-today) 40%, transparent);
 }
 
 [data-cal-slot] {

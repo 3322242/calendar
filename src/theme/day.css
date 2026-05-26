@@ -10,8 +10,10 @@
 
 [data-cal-day-view] [data-cal-allday] {
   display: flex;
-  border-bottom: 1px solid var(--cal-border);
+  background: var(--cal-surface);
+  border-bottom: 2px solid var(--cal-border-strong);
   min-height: 32px;
+  padding: 4px 0;
 }
 
 [data-cal-day-view] [data-cal-allday-label] {
@@ -60,9 +62,7 @@
   border-left: 1px solid var(--cal-border);
 }
 
-.cal-day-column[data-today] {
-  background: var(--cal-surface-today);
-}
+/* Day view: no background fill — it's always "today" so filling is redundant and noisy */
 
 .cal-day-slot {
   height: 30px;

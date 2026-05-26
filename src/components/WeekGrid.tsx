@@ -62,6 +62,28 @@ export function WeekGrid() {
 
   return (
     <div className="cal-week" data-cal-week role="grid" aria-label="Week view">
+      <div className="cal-week-day-headers" data-cal-week-day-headers>
+        <div className="cal-week-corner" data-cal-week-corner />
+        {days.map((day) => {
+          const today = isToday(day);
+          return (
+            <div
+              key={day.toISOString()}
+              className="cal-week-day-header"
+              data-cal-week-day-header
+              data-today={today || undefined}
+            >
+              <span className="cal-week-day-name" data-cal-day-name>
+                {new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(day)}
+              </span>
+              <span className="cal-week-day-num" data-cal-day-num>
+                {day.getDate()}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
       {maxAllDayRows > 0 && (
         <AllDayHeader
           days={days}
