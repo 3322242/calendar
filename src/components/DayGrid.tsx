@@ -15,7 +15,7 @@ const SLOT_MINUTES = 30;
 const SLOTS_PER_HOUR = 60 / SLOT_MINUTES;
 
 export function DayGrid() {
-  const { events, date, locale, maxEventsPerDay, maxOverlap, onSlotClick } = useCalendarContext();
+  const { events, date, locale, maxEventsPerDay, maxOverlap, labels, onSlotClick } = useCalendarContext();
 
   const { start } = useMemo(() => dayRange(date), [date]);
 
@@ -45,7 +45,7 @@ export function DayGrid() {
       {maxRows > 0 && (
         <div className="cal-day-allday" data-cal-allday>
           <div className="cal-day-allday-label" data-cal-allday-label>
-            All day
+            {labels.allDay}
           </div>
           <div className="cal-day-allday-events" data-cal-allday-events>
             {allDayPositioned.map((pos) => (

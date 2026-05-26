@@ -6,7 +6,7 @@ import type { CalendarEvent } from '../core/types';
 import { Event } from './Event';
 
 export function MonthGrid() {
-  const { events, date, locale, weekStartsOn, maxEventsPerDay, onSlotClick } =
+  const { events, date, locale, weekStartsOn, maxEventsPerDay, labels, onSlotClick } =
     useCalendarContext();
 
   const { gridDays, weekDayNames } = useMemo(() => {
@@ -90,7 +90,7 @@ export function MonthGrid() {
                     type="button"
                     aria-label={`${overflowCount} more events`}
                   >
-                    +{overflowCount} more
+                    {labels.more(overflowCount)}
                   </button>
                 )}
               </div>

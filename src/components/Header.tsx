@@ -48,7 +48,7 @@ export function NavNext() {
 }
 
 export function NavToday() {
-  const { navigate } = useCalendarContext();
+  const { navigate, labels } = useCalendarContext();
   return (
     <button
       className="cal-nav-today"
@@ -56,7 +56,7 @@ export function NavToday() {
       onClick={() => navigate(0)}
       type="button"
     >
-      Today
+      {labels.today}
     </button>
   );
 }
@@ -85,11 +85,11 @@ export function Title() {
 }
 
 export function ViewSwitcher() {
-  const { view, setView } = useCalendarContext();
+  const { view, setView, labels } = useCalendarContext();
   const views: { key: ViewType; label: string }[] = [
-    { key: 'month', label: 'Month' },
-    { key: 'week', label: 'Week' },
-    { key: 'day', label: 'Day' },
+    { key: 'month', label: labels.month },
+    { key: 'week', label: labels.week },
+    { key: 'day', label: labels.day },
   ];
 
   return (

@@ -171,6 +171,7 @@ export function App() {
         <Calendar
           events={SAMPLE_EVENTS}
           defaultView="month"
+          locale="uk"
           weekStartsOn={1}
           maxEventsPerDay={3}
           onEventClick={handleEventClick}

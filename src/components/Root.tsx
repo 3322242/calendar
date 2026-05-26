@@ -7,6 +7,8 @@ import {
   monthGridRange,
   weekRange,
 } from '../core/date-utils';
+import type { CalendarLabels } from '../core/i18n';
+import { resolveLabels } from '../core/i18n';
 import { CalendarContext, type CalendarContextValue } from '../core/store';
 import type {
   CalendarEvent,
@@ -30,6 +32,7 @@ export function Root({
   weekStartsOn: weekStartsOnProp,
   maxEventsPerDay = 3,
   maxOverlap = 4,
+  labels: customLabels,
   onEventClick,
   onSlotClick,
   onRangeChange,
@@ -40,6 +43,7 @@ export function Root({
   const isDateControlled = controlledDate !== undefined;
 
   const weekStartsOn = weekStartsOnProp ?? getWeekStartFromLocale(locale);
+  const labels = useMemo(() => resolveLabels(locale, customLabels), [locale, customLabels]);
 
   const [internalView, setInternalView] = useState<ViewType>(defaultView);
   const [internalDate, setInternalDate] = useState<Date>(() => defaultDate ?? new Date());
@@ -121,6 +125,7 @@ export function Root({
       weekStartsOn,
       maxEventsPerDay,
       maxOverlap,
+      labels,
       navigate,
       setView,
       setDate,
@@ -136,6 +141,7 @@ export function Root({
       weekStartsOn,
       maxEventsPerDay,
       maxOverlap,
+      labels,
       navigate,
       setView,
       setDate,

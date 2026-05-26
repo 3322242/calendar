@@ -18,7 +18,7 @@ const SLOT_MINUTES = 30;
 const SLOTS_PER_HOUR = 60 / SLOT_MINUTES;
 
 export function WeekGrid() {
-  const { events, date, locale, weekStartsOn, maxEventsPerDay, maxOverlap, onSlotClick } =
+  const { events, date, locale, weekStartsOn, maxEventsPerDay, maxOverlap, labels, onSlotClick } =
     useCalendarContext();
 
   const { days, range } = useMemo(() => {
@@ -91,6 +91,7 @@ export function WeekGrid() {
           overflow={allDayOverflow}
           maxRows={maxAllDayRows}
           locale={locale}
+          allDayLabel={labels.allDay}
         />
       )}
 
@@ -192,17 +193,19 @@ function AllDayHeader({
   overflow,
   maxRows,
   locale,
+  allDayLabel,
 }: {
   days: Date[];
   positioned: ReturnType<typeof layoutAllDayEvents>['positioned'];
   overflow: Map<number, number>;
   maxRows: number;
   locale: string;
+  allDayLabel: string;
 }) {
   return (
     <div className="cal-week-allday" data-cal-allday>
       <div className="cal-week-allday-label" data-cal-allday-label>
-        All day
+        {allDayLabel}
       </div>
       <div
         className="cal-week-allday-grid"

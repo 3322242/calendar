@@ -55,6 +55,8 @@ export {
 
 export { layoutTimedEvents, layoutAllDayEvents, getEventsForDay } from './core/event-layout';
 export type { LayoutOptions, TimedLayoutResult } from './core/event-layout';
+export { resolveLabels } from './core/i18n';
+export type { CalendarLabels } from './core/i18n';
 
 export { Calendar } from './components/Calendar';
 

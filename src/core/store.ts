@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import type { CalendarLabels } from './i18n';
 import type {
   CalendarEvent,
   RangeChangeInfo,
@@ -14,6 +15,7 @@ export interface CalendarContextValue {
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   maxEventsPerDay: number;
   maxOverlap: number;
+  labels: CalendarLabels;
   navigate: (direction: -1 | 0 | 1) => void;
   setView: (view: ViewType) => void;
   setDate: (date: Date) => void;
