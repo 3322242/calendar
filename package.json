@@ -1,6 +1,6 @@
 {
   "name": "@vspro/calendar",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Headless React event calendar — compound components, CSS custom properties, zero dependencies",
   "type": "module",
   "main": "./dist/index.cjs",
