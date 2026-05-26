@@ -55,6 +55,9 @@ export {
 
 export { layoutTimedEvents, layoutAllDayEvents, getEventsForDay } from './core/event-layout';
 
+export { Calendar } from './components/Calendar';
+
+import { Calendar as CalendarShorthand } from './components/Calendar';
 import { Root } from './components/Root';
 import {
   Header,
@@ -69,7 +72,7 @@ import { WeekGrid } from './components/WeekGrid';
 import { DayGrid } from './components/DayGrid';
 import { Event } from './components/Event';
 
-export const Calendar = Object.assign(Root, {
+const CalendarNamespace = Object.assign(CalendarShorthand, {
   Root,
   Header,
   NavPrev,
@@ -82,3 +85,5 @@ export const Calendar = Object.assign(Root, {
   DayGrid,
   Event,
 });
+
+export { CalendarNamespace as Cal };

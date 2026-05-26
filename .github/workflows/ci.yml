@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun test
+
+      - name: Build
+        run: bun run build
+
+      - name: Check bundle size
+        run: |
+          SIZE=$(stat -c%s dist/index.js 2>/dev/null || stat -f%z dist/index.js)
+          GZIP=$(gzip -c dist/index.js | wc -c)
+          echo "ESM: ${SIZE} bytes (gzip: ${GZIP} bytes)"
+          if [ "$GZIP" -gt 15360 ]; then
+            echo "::error::Bundle exceeds 15 KB gzip budget (${GZIP} bytes)"
+            exit 1
+          fi
