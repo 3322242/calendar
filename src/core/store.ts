@@ -12,6 +12,7 @@ export interface CalendarContextValue {
   date: Date;
   view: ViewType;
   locale: string;
+  timezone?: string | undefined;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   maxEventsPerDay: number;
   maxOverlap: number;
@@ -22,6 +23,8 @@ export interface CalendarContextValue {
   onEventClick?: ((event: CalendarEvent) => void) | undefined;
   onSlotClick?: ((info: SlotClickInfo) => void) | undefined;
   onRangeChange?: ((info: RangeChangeInfo) => void) | undefined;
+  onEventDrop?: ((event: CalendarEvent, newStart: Date, newEnd: Date) => void) | undefined;
+  onEventResize?: ((event: CalendarEvent, newStart: Date, newEnd: Date) => void) | undefined;
 }
 
 export const CalendarContext = createContext<CalendarContextValue | null>(null);

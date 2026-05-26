@@ -11,6 +11,8 @@ import {
 import { layoutAllDayEvents, layoutTimedEvents } from '../core/event-layout';
 import { useCalendarContext } from '../core/store';
 import type { CalendarEvent } from '../core/types';
+import { CurrentTimeLine } from './CurrentTime';
+import { DraggableEvent } from './DraggableEvent';
 import { Event } from './Event';
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
@@ -149,19 +151,15 @@ export function WeekGrid() {
                 )}
 
                 {layout.positioned.map((pos) => (
-                  <Event
+                  <DraggableEvent
                     key={String(pos.event.id)}
                     event={pos.event}
+                    positioned={pos}
                     className="cal-week-event"
-                    style={{
-                      position: 'absolute',
-                      top: `${pos.top * 100}%`,
-                      height: `${pos.height * 100}%`,
-                      left: `${pos.left * 100}%`,
-                      width: `${pos.width * 100}%`,
-                    }}
                   />
                 ))}
+
+                <CurrentTimeLine day={day} />
 
                 {Array.from(layout.overflowBySlot.entries()).map(([hour, info]) => (
                   <div

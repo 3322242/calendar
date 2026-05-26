@@ -8,6 +8,8 @@ import {
 } from '../core/date-utils';
 import { layoutAllDayEvents, layoutTimedEvents } from '../core/event-layout';
 import { useCalendarContext } from '../core/store';
+import { CurrentTimeLine } from './CurrentTime';
+import { DraggableEvent } from './DraggableEvent';
 import { Event } from './Event';
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
@@ -99,18 +101,14 @@ export function DayGrid() {
             }),
           )}
 
+          <CurrentTimeLine day={date} />
+
           {layout.positioned.map((pos) => (
-            <Event
+            <DraggableEvent
               key={String(pos.event.id)}
               event={pos.event}
+              positioned={pos}
               className="cal-day-event"
-              style={{
-                position: 'absolute',
-                top: `${pos.top * 100}%`,
-                height: `${pos.height * 100}%`,
-                left: `${pos.left * 100}%`,
-                width: `${pos.width * 100}%`,
-              }}
             />
           ))}
 

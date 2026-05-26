@@ -46,6 +46,7 @@ export interface CalendarProps {
   date?: Date;
   defaultDate?: Date;
   locale?: string;
+  timezone?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   maxEventsPerDay?: number;
   maxOverlap?: number;
@@ -55,4 +56,6 @@ export interface CalendarProps {
   onRangeChange?: (info: RangeChangeInfo) => void;
   onViewChange?: (view: ViewType) => void;
   onDateChange?: (date: Date) => void;
+  onEventDrop?: (event: CalendarEvent, newStart: Date, newEnd: Date) => void;
+  onEventResize?: (event: CalendarEvent, newStart: Date, newEnd: Date) => void;
 }

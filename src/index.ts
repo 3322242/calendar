@@ -57,6 +57,13 @@ export { layoutTimedEvents, layoutAllDayEvents, getEventsForDay } from './core/e
 export type { LayoutOptions, TimedLayoutResult } from './core/event-layout';
 export { resolveLabels } from './core/i18n';
 export type { CalendarLabels } from './core/i18n';
+export { expandRecurring } from './core/recurrence';
+export type { RecurrenceRule, RecurrenceFrequency, RecurringCalendarEvent } from './core/recurrence';
+export { toTimezone, formatTimeInZone, formatDateInZone } from './core/timezone';
+export { calculateDragResult, getSlotHeight } from './core/drag';
+export type { DragState, DragResult } from './core/drag';
+export { DraggableEvent } from './components/DraggableEvent';
+export { CurrentTimeLine } from './components/CurrentTime';
 
 export { Calendar } from './components/Calendar';
 

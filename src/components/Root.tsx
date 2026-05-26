@@ -29,6 +29,7 @@ export function Root({
   date: controlledDate,
   defaultDate,
   locale = 'default',
+  timezone,
   weekStartsOn: weekStartsOnProp,
   maxEventsPerDay = 3,
   maxOverlap = 4,
@@ -38,6 +39,8 @@ export function Root({
   onRangeChange,
   onViewChange,
   onDateChange,
+  onEventDrop,
+  onEventResize,
 }: RootProps) {
   const isViewControlled = controlledView !== undefined;
   const isDateControlled = controlledDate !== undefined;
@@ -122,6 +125,7 @@ export function Root({
       date,
       view,
       locale,
+      timezone,
       weekStartsOn,
       maxEventsPerDay,
       maxOverlap,
@@ -132,12 +136,15 @@ export function Root({
       onEventClick,
       onSlotClick,
       onRangeChange,
+      onEventDrop,
+      onEventResize,
     }),
     [
       events,
       date,
       view,
       locale,
+      timezone,
       weekStartsOn,
       maxEventsPerDay,
       maxOverlap,
@@ -148,6 +155,8 @@ export function Root({
       onEventClick,
       onSlotClick,
       onRangeChange,
+      onEventDrop,
+      onEventResize,
     ],
   );
 

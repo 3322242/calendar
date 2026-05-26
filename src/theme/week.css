@@ -178,6 +178,46 @@
   min-height: 18px;
 }
 
+/* Current time indicator */
+[data-cal-current-time] {
+  pointer-events: none;
+}
+
+[data-cal-current-time-line] {
+  height: 2px;
+  background: var(--cal-accent);
+}
+
+[data-cal-current-time-dot] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cal-accent);
+  position: absolute;
+  left: -5px;
+  top: -4px;
+}
+
+/* Drag & resize */
+[data-cal-event][data-dragging] {
+  box-shadow: var(--cal-shadow-popover, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  border-radius: var(--cal-radius-event);
+}
+
+[data-cal-resize-handle] {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+  border-radius: 0 0 var(--cal-radius-event) var(--cal-radius-event);
+}
+
+[data-cal-resize-handle]:hover {
+  background: color-mix(in srgb, var(--cal-accent) 30%, transparent);
+}
+
 [data-cal-overflow] {
   font-size: 10px;
   font-weight: var(--cal-font-weight-medium, 500);
