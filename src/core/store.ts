@@ -13,6 +13,7 @@ export interface CalendarContextValue {
   locale: string;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   maxEventsPerDay: number;
+  maxOverlap: number;
   navigate: (direction: -1 | 0 | 1) => void;
   setView: (view: ViewType) => void;
   setDate: (date: Date) => void;

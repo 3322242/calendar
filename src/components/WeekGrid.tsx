@@ -18,7 +18,7 @@ const SLOT_MINUTES = 30;
 const SLOTS_PER_HOUR = 60 / SLOT_MINUTES;
 
 export function WeekGrid() {
-  const { events, date, locale, weekStartsOn, maxEventsPerDay, onSlotClick } =
+  const { events, date, locale, weekStartsOn, maxEventsPerDay, maxOverlap, onSlotClick } =
     useCalendarContext();
 
   const { days, range } = useMemo(() => {
@@ -32,10 +32,10 @@ export function WeekGrid() {
       const dayEvents = events.filter(
         (e) => !e.allDay && isSameDay(e.start, day),
       );
-      map.set(day.toISOString(), layoutTimedEvents(dayEvents, day));
+      map.set(day.toISOString(), layoutTimedEvents(dayEvents, day, { maxOverlap }));
     }
     return map;
-  }, [events, days]);
+  }, [events, days, maxOverlap]);
 
   const { allDayPositioned, allDayOverflow } = useMemo(() => {
     const { positioned, overflowCounts } = layoutAllDayEvents(
@@ -89,7 +89,7 @@ export function WeekGrid() {
         <div className="cal-week-columns" data-cal-week-columns>
           {days.map((day) => {
             const dayKey = day.toISOString();
-            const positioned = timedByDay.get(dayKey) ?? [];
+            const layout = timedByDay.get(dayKey) ?? { positioned: [], overflowBySlot: new Map() };
             const today = isToday(day);
 
             return (
@@ -125,7 +125,7 @@ export function WeekGrid() {
                   }),
                 )}
 
-                {positioned.map((pos) => (
+                {layout.positioned.map((pos) => (
                   <Event
                     key={String(pos.event.id)}
                     event={pos.event}
@@ -138,6 +138,22 @@ export function WeekGrid() {
                       width: `${pos.width * 100}%`,
                     }}
                   />
+                ))}
+
+                {Array.from(layout.overflowBySlot.entries()).map(([hour, info]) => (
+                  <div
+                    key={`overflow-${hour}`}
+                    className="cal-week-overflow"
+                    data-cal-overflow
+                    style={{
+                      position: 'absolute',
+                      top: `${(hour / 24) * 100}%`,
+                      right: '2px',
+                      zIndex: 3,
+                    }}
+                  >
+                    +{info.count}
+                  </div>
                 ))}
               </div>
             );

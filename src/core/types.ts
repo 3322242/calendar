@@ -48,6 +48,7 @@ export interface CalendarProps {
   locale?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   maxEventsPerDay?: number;
+  maxOverlap?: number;
   onEventClick?: (event: CalendarEvent) => void;
   onSlotClick?: (info: SlotClickInfo) => void;
   onRangeChange?: (info: RangeChangeInfo) => void;

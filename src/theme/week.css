@@ -135,3 +135,15 @@
   border-radius: var(--cal-radius-event);
   min-height: 18px;
 }
+
+[data-cal-overflow] {
+  font-size: 10px;
+  font-weight: var(--cal-font-weight-medium, 500);
+  color: var(--cal-accent);
+  background: var(--cal-surface);
+  border: 1px solid var(--cal-border);
+  border-radius: var(--cal-radius-event);
+  padding: 1px 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}

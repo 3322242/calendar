@@ -3,6 +3,7 @@ import {
   addMinutes,
   dayRange,
   formatTime,
+  isSameDay,
   isToday,
 } from '../core/date-utils';
 import { layoutAllDayEvents, layoutTimedEvents } from '../core/event-layout';
@@ -14,14 +15,14 @@ const SLOT_MINUTES = 30;
 const SLOTS_PER_HOUR = 60 / SLOT_MINUTES;
 
 export function DayGrid() {
-  const { events, date, locale, maxEventsPerDay, onSlotClick } = useCalendarContext();
+  const { events, date, locale, maxEventsPerDay, maxOverlap, onSlotClick } = useCalendarContext();
 
   const { start } = useMemo(() => dayRange(date), [date]);
 
-  const positioned = useMemo(() => {
-    const dayEvents = events.filter((e) => !e.allDay);
-    return layoutTimedEvents(dayEvents, date);
-  }, [events, date]);
+  const layout = useMemo(() => {
+    const dayEvents = events.filter((e) => !e.allDay && isSameDay(e.start, date));
+    return layoutTimedEvents(dayEvents, date, { maxOverlap });
+  }, [events, date, maxOverlap]);
 
   const { allDayPositioned, maxRows } = useMemo(() => {
     const { positioned: p } = layoutAllDayEvents(events, start, 1, maxEventsPerDay);
@@ -98,7 +99,7 @@ export function DayGrid() {
             }),
           )}
 
-          {positioned.map((pos) => (
+          {layout.positioned.map((pos) => (
             <Event
               key={String(pos.event.id)}
               event={pos.event}
@@ -111,6 +112,22 @@ export function DayGrid() {
                 width: `${pos.width * 100}%`,
               }}
             />
+          ))}
+
+          {Array.from(layout.overflowBySlot.entries()).map(([hour, info]) => (
+            <div
+              key={`overflow-${hour}`}
+              className="cal-day-overflow"
+              data-cal-overflow
+              style={{
+                position: 'absolute',
+                top: `${(hour / 24) * 100}%`,
+                right: '2px',
+                zIndex: 3,
+              }}
+            >
+              +{info.count}
+            </div>
           ))}
         </div>
       </div>

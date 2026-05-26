@@ -13,12 +13,13 @@ function makeEvent(overrides: Partial<CalendarEvent> & { id: string }): Calendar
 
 describe('layoutTimedEvents', () => {
   test('empty events', () => {
-    expect(layoutTimedEvents([], new Date(2026, 4, 26))).toEqual([]);
+    const { positioned } = layoutTimedEvents([], new Date(2026, 4, 26));
+    expect(positioned).toEqual([]);
   });
 
   test('single event', () => {
     const events = [makeEvent({ id: '1' })];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result).toHaveLength(1);
     expect(result[0]!.column).toBe(0);
     expect(result[0]!.totalColumns).toBe(1);
@@ -30,7 +31,7 @@ describe('layoutTimedEvents', () => {
       makeEvent({ id: '1', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
       makeEvent({ id: '2', start: new Date(2026, 4, 26, 9, 30), end: new Date(2026, 4, 26, 10, 30) }),
     ];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result).toHaveLength(2);
     expect(result[0]!.totalColumns).toBe(2);
     expect(result[1]!.totalColumns).toBe(2);
@@ -44,7 +45,7 @@ describe('layoutTimedEvents', () => {
       makeEvent({ id: '1', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
       makeEvent({ id: '2', start: new Date(2026, 4, 26, 10, 0), end: new Date(2026, 4, 26, 11, 0) }),
     ];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result).toHaveLength(2);
     expect(result[0]!.column).toBe(0);
     expect(result[1]!.column).toBe(0);
@@ -57,7 +58,7 @@ describe('layoutTimedEvents', () => {
       makeEvent({ id: '2', start: new Date(2026, 4, 26, 9, 30), end: new Date(2026, 4, 26, 10, 30) }),
       makeEvent({ id: '3', start: new Date(2026, 4, 26, 10, 0), end: new Date(2026, 4, 26, 12, 0) }),
     ];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result).toHaveLength(3);
     expect(result[0]!.totalColumns).toBe(3);
   });
@@ -67,7 +68,7 @@ describe('layoutTimedEvents', () => {
       makeEvent({ id: '1', allDay: true }),
       makeEvent({ id: '2' }),
     ];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result).toHaveLength(1);
     expect(result[0]!.event.id).toBe('2');
   });
@@ -80,8 +81,38 @@ describe('layoutTimedEvents', () => {
         end: new Date(2026, 4, 26, 9, 5),
       }),
     ];
-    const result = layoutTimedEvents(events, new Date(2026, 4, 26));
+    const { positioned: result } = layoutTimedEvents(events, new Date(2026, 4, 26));
     expect(result[0]!.height).toBeGreaterThanOrEqual(15 / 1440);
+  });
+
+  test('maxOverlap caps visible columns and reports overflow', () => {
+    const events = [
+      makeEvent({ id: '1', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '2', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '3', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '4', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '5', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+    ];
+    const { positioned, overflowBySlot } = layoutTimedEvents(events, new Date(2026, 4, 26), { maxOverlap: 3 });
+    expect(positioned).toHaveLength(3);
+    expect(positioned[0]!.totalColumns).toBe(3);
+    expect(positioned[0]!.width).toBeCloseTo(1 / 3);
+    expect(overflowBySlot.size).toBeGreaterThan(0);
+    const overflow = overflowBySlot.get(9);
+    expect(overflow).toBeDefined();
+    expect(overflow!.count).toBe(2);
+  });
+
+  test('maxOverlap default 4 allows 4 columns', () => {
+    const events = [
+      makeEvent({ id: '1', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '2', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '3', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+      makeEvent({ id: '4', start: new Date(2026, 4, 26, 9, 0), end: new Date(2026, 4, 26, 10, 0) }),
+    ];
+    const { positioned, overflowBySlot } = layoutTimedEvents(events, new Date(2026, 4, 26));
+    expect(positioned).toHaveLength(4);
+    expect(overflowBySlot.size).toBe(0);
   });
 });
 

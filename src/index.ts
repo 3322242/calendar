@@ -54,6 +54,7 @@ export {
 } from './core/date-utils';
 
 export { layoutTimedEvents, layoutAllDayEvents, getEventsForDay } from './core/event-layout';
+export type { LayoutOptions, TimedLayoutResult } from './core/event-layout';
 
 export { Calendar } from './components/Calendar';
 

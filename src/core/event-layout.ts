@@ -1,12 +1,23 @@
 import { diffInMinutes, isSameDay, startOfDay } from './date-utils';
 import type { AllDayPositionedEvent, CalendarEvent, PositionedEvent } from './types';
 
+export interface LayoutOptions {
+  maxOverlap?: number;
+}
+
+export interface TimedLayoutResult {
+  positioned: PositionedEvent[];
+  overflowBySlot: Map<number, { count: number; events: CalendarEvent[] }>;
+}
+
 export function layoutTimedEvents(
   events: CalendarEvent[],
   dayStart: Date,
-): PositionedEvent[] {
+  options?: LayoutOptions,
+): TimedLayoutResult {
+  const maxOverlap = options?.maxOverlap ?? 4;
   const timed = events.filter((e) => !e.allDay);
-  if (timed.length === 0) return [];
+  if (timed.length === 0) return { positioned: [], overflowBySlot: new Map() };
 
   const sorted = [...timed].sort((a, b) => {
     const diff = a.start.getTime() - b.start.getTime();
@@ -16,7 +27,8 @@ export function layoutTimedEvents(
 
   const dayStartTime = startOfDay(dayStart);
   const clusters = buildClusters(sorted);
-  const result: PositionedEvent[] = [];
+  const positioned: PositionedEvent[] = [];
+  const overflowBySlot = new Map<number, { count: number; events: CalendarEvent[] }>();
 
   for (const cluster of clusters) {
     const columns: CalendarEvent[][] = [];
@@ -36,27 +48,39 @@ export function layoutTimedEvents(
       }
     }
 
-    const totalColumns = columns.length;
+    const visibleColumns = Math.min(columns.length, maxOverlap);
 
     for (let col = 0; col < columns.length; col++) {
       for (const event of columns[col]!) {
+        if (col >= maxOverlap) {
+          const slotHour = event.start.getHours();
+          const existing = overflowBySlot.get(slotHour);
+          if (existing) {
+            existing.count++;
+            existing.events.push(event);
+          } else {
+            overflowBySlot.set(slotHour, { count: 1, events: [event] });
+          }
+          continue;
+        }
+
         const topMinutes = Math.max(0, diffInMinutes(dayStartTime, event.start));
         const durationMinutes = Math.max(15, diffInMinutes(event.start, event.end));
 
-        result.push({
+        positioned.push({
           event,
           top: topMinutes / 1440,
           height: durationMinutes / 1440,
-          left: col / totalColumns,
-          width: 1 / totalColumns,
+          left: col / visibleColumns,
+          width: 1 / visibleColumns,
           column: col,
-          totalColumns,
+          totalColumns: visibleColumns,
         });
       }
     }
   }
 
-  return result;
+  return { positioned, overflowBySlot };
 }
 
 function buildClusters(sorted: CalendarEvent[]): CalendarEvent[][] {
