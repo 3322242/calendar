@@ -2,7 +2,7 @@
 
 Headless React event calendar with compound components, CSS custom properties theming, and zero runtime dependencies.
 
-**Status:** Early development (v0.0.1)
+**Status:** Active (v0.2.1)
 
 ## Features
 
